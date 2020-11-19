@@ -6,12 +6,16 @@ export default class BBCPurifier extends Purifier {
   }
   purify() {
     const $ = cheerio.load(this.html)
-    const headline = $("article > header > h1").text()
-    const subCategory = $(".story-info > span > a").text()
-    const category = $(`meta[property="og:site_name"]`)
-      .attr("content")
-      .trim()
-      .split(" ")[1]
-    return { headline, subCategory, category }
+    const headline = $("article > header > h1")?.text() ?? ""
+    const subCategory = $(".story-info > span > a")?.text() ?? ""
+    const category =
+      $(`meta[property="og:site_name"]`)
+        .attr("content")
+        ?.trim()
+        .split(" ")[1] ?? ""
+    this._dataObject = { headline, subCategory, category }
+  }
+  async persistPurified() {
+    // add method here
   }
 }

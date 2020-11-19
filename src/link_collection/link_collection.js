@@ -58,7 +58,8 @@ export default class LinkCollection {
    * @param {Link|Link[]} links - A Link object or an array of Link objects
    */
   enqueue(links) {
-    this._links = this._links.concat(links)
+    if (!!links && (links instanceof Array || links instanceof Link))
+      this._links = this._links.concat(links)
   }
   /**
    * Dequeue a new link or links array
@@ -112,7 +113,7 @@ export default class LinkCollection {
    */
   removeDuplicates() {
     this._links = this._links.filter(
-      (link, index, self) => self.findIndex((t) => t.isEqual(link)) === index
+      (link, index, self) => self.findIndex((t) => link.isEqual(t)) === index
     )
   }
 }

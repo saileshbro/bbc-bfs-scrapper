@@ -26,7 +26,7 @@ export default class Spider {
     try {
       await this._scrapeHTML()
     } catch (error) {
-      console.log(err.code)
+      console.log(error.code)
       throw new Error(
         "Spider Error! Couldn't fetch new links! Please check the internet connection."
       )
@@ -49,6 +49,12 @@ export default class Spider {
       }
     })
     this._horizon.removeDuplicates()
+  }
+  /**
+   * @returns {LinkCollection} - The collection to which the spider adds links encountered in a page
+   */
+  get horizon() {
+    return this._horizon
   }
   /**
    * Getter for the link property
@@ -74,7 +80,6 @@ export default class Spider {
     await page.goto(this._link.resolve(), { waitUntil: "networkidle2" })
     this._html = await page.content()
     await browser.close()
-    debugger
     return
   }
   /**

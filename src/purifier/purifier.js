@@ -6,11 +6,7 @@ export default class Purifier {
   purify() {
     throw new Error("Purifier Error! Abstract Method!")
   }
-  /**
-   * Returns the data object to be retrived
-   * @returns {object}
-   */
-  getObjectToBeSaved() {
+  persistPurified() {
     throw new Error("Purifier Error! Abstract Method!")
   }
   /**

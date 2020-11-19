@@ -39,7 +39,14 @@ describe("LinkCollection", function () {
       new Link("https://nodejs.org", "/download"),
     ]
     let linkCollection = LinkCollection.create()
-
+    it("should not add undefined value", function () {
+      linkCollection.enqueue(undefined)
+      expect(linkCollection._links.length).to.be.equals(0)
+      linkCollection.links.forEach((link) => {
+        expect(link.baseURL).to.be.a("string")
+        expect(link.path).to.be.a("string")
+      })
+    })
     it("should add a new link object to collection", function () {
       linkCollection.enqueue(new Link("https://wikipedia.org"))
       linkCollection.links.forEach((link) => {
@@ -54,6 +61,24 @@ describe("LinkCollection", function () {
         expect(link.baseURL).to.be.a("string")
         expect(link.path).to.be.a("string")
       })
+    })
+  })
+  context("#dequeue", function () {
+    const vimLink = new Link("https://vim.org", "/about")
+    const espnLink = new Link("https://espn.in")
+
+    let linkCollection = LinkCollection.create()
+    linkCollection.enqueue(vimLink)
+    linkCollection.enqueue([espnLink])
+    it("should remove and return from front of the list", function () {
+      let link = linkCollection.dequeue()
+      expect(link).to.deep.equals(vimLink)
+      expect(linkCollection.size).equals(1)
+      link = linkCollection.dequeue()
+      expect(link).to.deep.equals(espnLink)
+      expect(linkCollection.size).equals(0)
+      link = linkCollection.dequeue()
+      expect(link).to.be.undefined
     })
   })
 

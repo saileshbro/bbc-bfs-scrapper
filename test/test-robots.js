@@ -108,5 +108,9 @@ describe("RobotsCache", function () {
       const wikiRobot = robotsCache.findRobotFor(wikipedia)
       expect(wikiRobot).to.equal(mockWikiRobot)
     })
+    it("should return undefined if not exists", function () {
+      const wikiRobot = robotsCache.findRobotFor(new Link("www.facebook.com"))
+      expect(wikiRobot).to.be.undefined
+    })
   })
 })

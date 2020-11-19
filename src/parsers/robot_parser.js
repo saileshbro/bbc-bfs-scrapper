@@ -9,7 +9,7 @@ export class RobotsParser {
    */
   constructor(link, robotsTXT) {
     /**
-     * The link pbject for which to fetch the robots.txt document
+     * The link object for which to fetch the robots.txt document
      * @type {string}
      * @private
      */
@@ -29,7 +29,7 @@ export class RobotsParser {
    * @returns {boolean}
    */
   isDisallowed(link, userAgent = "*") {
-    return this._parser.isDisallowed(link.resolve, userAgent)
+    return this._parser.isDisallowed(link.resolve(), userAgent)
   }
   /**
    * Get the crawl delay of the url for a given user-agent
