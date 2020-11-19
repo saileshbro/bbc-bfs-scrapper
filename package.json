@@ -1,0 +1,48 @@
+{
+  "name": "bbc-bfs-scrapper",
+  "version": "1.0.0",
+  "description": "bbc-bfs-scrapper is a news aggregator application which scrapes news articles from BBC.com respecting the robots.txt.",
+  "main": "src/app.js",
+  "scripts": {
+    "dev": "nodemon --exec babel-node ./src/app.js",
+    "test": "./node_modules/.bin/mocha --require @babel/register",
+    "test:link": "./node_modules/.bin/mocha --require @babel/register test/test-link.js -r chai/register-expect",
+    "test:links-collection": "./node_modules/.bin/mocha --require @babel/register test/test-links-collection.js -r chai/register-expect",
+    "test:robots": "./node_modules/.bin/mocha --require @babel/register test/test-robots",
+    "test:spider": "./node_modules/.bin/mocha --require @babel/register test/test-spider"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/saileshbro/bbc-bfs-scrapper.git"
+  },
+  "author": "Sailesh Dahal <saileshbro@gmail.com> (http://saileshdahal.com.np)",
+  "private": true,
+  "bugs": {
+    "url": "https://github.com/saileshbro/bbc-bfs-scrapper/issues",
+    "email": "saileshbro@gmail.com"
+  },
+  "keywords": [
+    "scrapper",
+    "bbc",
+    "bfs"
+  ],
+  "homepage": "https://github.com/saileshbro/bbc-bfs-scrapper#readme",
+  "dependencies": {
+    "axios": "^0.21.0",
+    "cheerio": "^1.0.0-rc.3",
+    "puppeteer": "^5.5.0",
+    "robots-parser": "^2.1.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.12.1",
+    "@babel/core": "^7.12.3",
+    "@babel/node": "^7.12.6",
+    "@babel/plugin-transform-runtime": "^7.12.1",
+    "@babel/preset-env": "^7.12.1",
+    "@babel/register": "^7.12.1",
+    "chai": "^4.2.0",
+    "mocha": "^8.2.1",
+    "nodemon": "^2.0.6"
+  },
+  "license": "MIT"
+}
