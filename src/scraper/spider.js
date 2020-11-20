@@ -81,6 +81,7 @@ export default class Spider {
         waitUntil: "networkidle2",
       })
       this._html = await page.content()
+      await page.close()
       return this._html
     } catch (error) {
       throw new Error("Headless Browser Error")

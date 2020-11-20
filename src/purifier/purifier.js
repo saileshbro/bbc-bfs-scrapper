@@ -6,7 +6,7 @@ export default class Purifier {
   purify() {
     throw new Error("Purifier Error! Abstract Method!")
   }
-  persistPurified() {
+  async persistPurified() {
     throw new Error("Purifier Error! Abstract Method!")
   }
   /**

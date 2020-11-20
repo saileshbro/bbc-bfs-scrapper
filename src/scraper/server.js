@@ -9,6 +9,8 @@ import Spider from "./spider"
 import { RobotsCache, RobotsParser } from "./../parsers/robot_parser"
 import Axios from "axios"
 import PurifierFactory from "../purifier/purifier_factory"
+import FilterFactory from "../filter/filter_factory"
+
 export default class Server {
   /**
    * Create a new Server object
@@ -33,6 +35,8 @@ export default class Server {
      * @type {Spider[]}
      */
     this._spiders = []
+
+    this._visitedCache = {}
   }
   /**
    * This method spawns a new spider to visit given link
@@ -110,6 +114,7 @@ export default class Server {
    */
   stop() {
     clearInterval(this._timeout)
+    process.exit(0)
   }
   /**
    * Start the spider-spawning server
@@ -118,59 +123,85 @@ export default class Server {
    */
   start(seeds) {
     this._links.enqueue(seeds)
-
     this._timeout = setInterval(async () => {
-      let spider, newLinks, robotsTXT
+      if (this._links.size > 1000) {
+        console.log("😴 Too much to process")
+      }
+      let spider, robotsTXT
       let link = this._links.dequeue()
-      if (!link) return
-      console.log("🍒", link.resolve())
-      if ((robotsTXT = this._robotsCache.findRobotFor(link) === undefined)) {
-        try {
-          robotsTXT = await this._getRobotsTXT(link)
-        } catch (err) {
-          console.error(err.message)
-          if (
-            err.message.includes("EAI_AGAIN") ||
-            err.message.includes("ENOTFOUND")
-          ) {
-            this._links.enqueue(link)
+      if (link) {
+        if (this._links.size > 0) {
+          const linkFilter = FilterFactory.createFilter(link)
+          if (linkFilter.isLinkValid()) {
+            console.log("🍒", link.resolve())
+          } else {
             return
           }
-          robotsTXT = "User-agent: *\nAllow: /"
         }
-        this._robotsCache.update(link, robotsTXT)
-      }
-      try {
-        spider = await this._spawnSpider(link, robotsTXT)
-      } catch (err) {
-        console.error(err.message)
-        if (this._canExit()) process.exit(2)
-        return
-      }
-      this._spiders.push(spider)
+        if (this._visitedCache[link.resolve()]) {
+          console.log("😎 Already Visited")
+          return
+        } else {
+          this._visitedCache[link.resolve()] = true
+        }
+        if ((robotsTXT = this._robotsCache.findRobotFor(link) === undefined)) {
+          try {
+            robotsTXT = await this._getRobotsTXT(link)
+          } catch (err) {
+            console.error(err.message)
+            robotsTXT = "User-agent: *\nAllow: /"
+          }
+          this._robotsCache.update(link, robotsTXT)
+        }
+        try {
+          spider = await this._spawnSpider(link, robotsTXT)
+        } catch (err) {
+          console.error(err.message)
+          if (this._canExit()) {
+            process.exit(2)
+          }
+          return
+        }
+        this._spiders.push(spider)
 
-      try {
-        await spider.getNewLinks()
-      } catch (err) {
+        try {
+          await spider.getNewLinks()
+        } catch (err) {
+          this._spiders = this._spiders.filter(
+            (s) => !s.link.isEqual(spider.link)
+          )
+          console.error(err.message)
+          if (this._canExit()) {
+            process.exit(2)
+          }
+          return
+        }
+        console.log(`✔ ${spider.horizon.size} links collected.`)
+        const specialLinks = spider.horizon.links.filter((link) =>
+          new FilterFactory.createFilter(link).isLinkValid()
+        )
+        this._links.enqueue(specialLinks)
+        this._links.removeDuplicates()
         this._spiders = this._spiders.filter(
           (s) => !s.link.isEqual(spider.link)
         )
-        console.error(err.message)
-        if (this._canExit()) process.exit(2)
-        return
+        console.log(`🔗 ${this._links.size} links pending.`)
+        let purifier
+        try {
+          purifier = PurifierFactory.createPurifier(spider.html, link)
+        } catch (error) {
+          return console.error(error.message)
+        }
+        purifier.purify()
+        try {
+          await purifier.persistPurified()
+        } catch (error) {
+          console.log(`💩 Failed to save the obtained data`)
+        }
+        if (this._canExit()) {
+          // this.stop()
+        }
       }
-      console.log(`✔ ${spider.horizon.size} links collected.`)
-      this._links.enqueue(spider.horizon._links)
-      this._links.removeDuplicates()
-      this._spiders = this._spiders.filter((s) => !s.link.isEqual(spider.link))
-      console.log(`🔗 ${this._links.size} links pending.`)
-      let purifier
-      try {
-        purifier = PurifierFactory.createPurifier(spider.html, link)
-      } catch (error) {
-        return console.error(error.message)
-      }
-      await purifier.persistPurified()
-    }, 5000)
+    }, 3000)
   }
 }

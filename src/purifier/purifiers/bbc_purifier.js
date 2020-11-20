@@ -1,5 +1,7 @@
 import Purifier from "../purifier"
 import * as cheerio from "cheerio"
+import Axios from "axios"
+
 export default class BBCPurifier extends Purifier {
   constructor(html, link) {
     super(html, link)
@@ -16,6 +18,19 @@ export default class BBCPurifier extends Purifier {
     this._dataObject = { headline, subCategory, category }
   }
   async persistPurified() {
-    // add method here
+    if (
+      this._dataObject.category &&
+      this._dataObject.headline &&
+      this._dataObject.subCategory
+    ) {
+      this._dataObject.url = this.link.resolve()
+      await Axios.post("http://localhost:8080/articles", this._dataObject)
+      console.log(`😍 Saved successfully`)
+    } else {
+      await Axios.post("http://localhost:8080/purifierErrorLinks", {
+        url: this.link.resolve(),
+      })
+      console.log("🙄", "Purifier Improvement Needed")
+    }
   }
 }
