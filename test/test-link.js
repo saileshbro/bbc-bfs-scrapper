@@ -1,5 +1,5 @@
 import { expect } from "chai"
-import Link from "./../src/link_queue/link"
+import Link from "../src/link_collection/link"
 
 describe("Link", function () {
   context("#resolve()", function () {

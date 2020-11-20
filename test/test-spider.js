@@ -1,4 +1,5 @@
 import { expect } from "chai"
+import HeadlessBrowser from "../src/headless_browser"
 import Link from "../src/link_collection/link"
 import LinkCollection from "../src/link_collection/link_collection"
 import Spider from "../src/scraper/spider"
@@ -7,6 +8,12 @@ const link = new Link("https://en.wikipedia.org", "/wiki/Node.js")
 const spider = new Spider(link)
 
 describe("Spider class", function () {
+  before(function () {
+    return HeadlessBrowser.instance.initialize()
+  })
+  after(function () {
+    return HeadlessBrowser.instance._browser.close()
+  })
   context("#spawn", function () {
     it("should return a Spider object", function () {
       let spider = Spider.spawn(link)
@@ -50,14 +57,14 @@ describe("Spider class", function () {
     })
   })
   context("#getHTML", function () {
-    it("should get html from client side rendered website", function () {
+    this.timeout(0)
+    it("should get html from client side rendered website", async function () {
       const link = new Link("https://www.bbc.com", "/sport/cricket/54998739")
-      const spider = new Spider(link)
-      spider._scrapeHTML().then(() => {
-        expect(spider.html).to.be.string
-        console.log(spider.html)
-        expect(spider.html.length).to.be.greaterThan(200)
-      })
+      const spider = Spider.spawn(link)
+      await spider._scrapeHTML()
+      expect(spider.html).to.not.be.undefined
+      expect(spider.html).to.be.string
+      expect(spider.html).to.not.be.empty
     })
   })
 })

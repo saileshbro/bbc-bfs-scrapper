@@ -8,8 +8,9 @@
     "test": "./node_modules/.bin/mocha --require @babel/register",
     "test:link": "./node_modules/.bin/mocha --require @babel/register test/test-link.js -r chai/register-expect",
     "test:links-collection": "./node_modules/.bin/mocha --require @babel/register test/test-links-collection.js -r chai/register-expect",
-    "test:robots": "./node_modules/.bin/mocha --require @babel/register test/test-robots",
-    "test:spider": "./node_modules/.bin/mocha --require @babel/register test/test-spider"
+    "test:robots": "./node_modules/.bin/mocha --require @babel/register test/test-robots.js -r chai/register-expect",
+    "test:spider": "./node_modules/.bin/mocha --require @babel/register test/test-spider.js -r chai/register-expect",
+    "test:server": "./node_modules/.bin/mocha --require @babel/register test/test-server.js -r chai/register-expect"
   },
   "repository": {
     "type": "git",
@@ -41,6 +42,7 @@
     "@babel/preset-env": "^7.12.1",
     "@babel/register": "^7.12.1",
     "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
     "mocha": "^8.2.1",
     "nodemon": "^2.0.6"
   },

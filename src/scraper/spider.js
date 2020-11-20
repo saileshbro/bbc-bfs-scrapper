@@ -7,6 +7,7 @@ import * as cheerio from "cheerio"
 import Axios from "axios"
 import LinkCollection from "./../link_collection/link_collection"
 import Link from "../link_collection/link"
+import HeadlessBrowser from "../headless_browser"
 const puppeteer = require("puppeteer")
 export default class Spider {
   /**
@@ -14,7 +15,7 @@ export default class Spider {
    * If the links collection of one spider spawned in a url is full,
    * then links collection field can be added to spawn
    * @param {Link} link - The link object for the site to be traversed
-   * @returns {Spider}
+   * @returns {Spider} spider
    */
   static spawn(link) {
     return new Spider(link)
@@ -26,7 +27,7 @@ export default class Spider {
     try {
       await this._scrapeHTML()
     } catch (error) {
-      console.log(error.code)
+      console.log(error)
       throw new Error(
         "Spider Error! Couldn't fetch new links! Please check the internet connection."
       )
@@ -74,13 +75,16 @@ export default class Spider {
     return this._html
   }
   async _scrapeHTML() {
-    let browser = await puppeteer.launch()
-    let page = await browser.newPage()
-    page.setDefaultNavigationTimeout(0)
-    await page.goto(this._link.resolve(), { waitUntil: "networkidle2" })
-    this._html = await page.content()
-    await browser.close()
-    return
+    try {
+      const page = await HeadlessBrowser.instance.page()
+      await page.goto(this._link.resolve(), {
+        waitUntil: "networkidle2",
+      })
+      this._html = await page.content()
+      return this._html
+    } catch (error) {
+      throw new Error("Headless Browser Error")
+    }
   }
   /**
    * Create a new Spider object
@@ -100,6 +104,6 @@ export default class Spider {
      * @type {LinksCollection}
      */
     this._horizon = LinkCollection.create()
-    this._html = ""
+    this._html
   }
 }
