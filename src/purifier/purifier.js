@@ -1,3 +1,5 @@
+import Link from "../link_collection/link"
+
 export default class Purifier {
   /**
    * Purify the html string into an Article object

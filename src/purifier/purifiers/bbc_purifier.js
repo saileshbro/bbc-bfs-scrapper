@@ -1,20 +1,73 @@
 import Purifier from "../purifier"
 import * as cheerio from "cheerio"
 import Axios from "axios"
+import Link from "../../link_collection/link"
 
 export default class BBCPurifier extends Purifier {
+  /**
+   *
+   * @param {string} html
+   * @param {Link} link
+   */
   constructor(html, link) {
     super(html, link)
   }
   purify() {
     const $ = cheerio.load(this.html)
-    const headline = $("article > header > h1")?.text() ?? ""
-    const subCategory = $(".story-info > span > a")?.text() ?? ""
-    const category =
-      $(`meta[property="og:site_name"]`)
-        .attr("content")
-        ?.trim()
-        .split(" ")[1] ?? ""
+    let headline, subCategory, category
+    if (this.link.resolve().startsWith("https://www.bbc.com/sport/")) {
+      headline = $("article > header > h1")?.text() ?? ""
+      subCategory = $(".story-info > span > a")?.text() ?? ""
+      category =
+        $(`meta[property="og:site_name"]`)
+          .attr("content")
+          ?.trim()
+          .split(" ")[1] ?? ""
+    }
+    if (this.link.resolve().startsWith("http://www.bbc.com/travel/story/")) {
+      category = $(`a[id="brand"]`)?.text() ?? ""
+      headline = $(`meta[property="og:title"]`)?.attr("content") ?? ""
+      subCategory =
+        $(".seperated-list.context-heading-list > .seperated-list-item > span")
+          ?.text()
+          ?.trim() ?? ""
+    }
+    if (
+      this.link.resolve().startsWith("https://www.bbc.com/culture/article/") ||
+      this.link.resolve().startsWith("https://www.bbc.com/worklife/article/")
+    ) {
+      category =
+        $(`meta[name="twitter:site"]`)?.attr("content").replace("@BBC_", "") ??
+        ""
+      headline = $(`meta[property="og:title"]`)?.attr("content") ?? ""
+      subCategory = $("div.article-labels >a:last-child")?.text()?.trim() ?? ""
+    }
+    if (this.link.resolve().startsWith("https://www.bbc.com/future/article/")) {
+      category =
+        $(`meta[name="twitter:site"]`)?.attr("content").replace("@BBC_", "") ??
+        ""
+      headline = $(`meta[property="og:title"]`)?.attr("content") ?? ""
+      subCategory = $("div.article-labels >a:last-child")?.text()?.trim() ?? ""
+    }
+    if (this.link.resolve().startsWith("https://www.bbc.com/news/av/")) {
+      headline = $(`meta[property="og:title"]`)?.attr("content") ?? ""
+      category =
+        $(`meta[property="og:site_name"]`)
+          .attr("content")
+          ?.trim()
+          .split(" ")[1] ?? ""
+      subCategory =
+        $(`a[href^="/news/"] > span[aria-hidden="false"]`)?.text() ?? ""
+    }
+    if (this.link.resolve().startsWith("https://www.bbc.com/news/")) {
+      headline = $(`meta[property="og:title"]`)?.attr("content") ?? ""
+      category =
+        $(`meta[property="og:site_name"]`)
+          .attr("content")
+          ?.trim()
+          .split(" ")[1] ?? ""
+      subCategory = $(`meta[property="article:section"]`)?.attr("content") ?? ""
+    }
     this._dataObject = { headline, subCategory, category }
   }
   async persistPurified() {
