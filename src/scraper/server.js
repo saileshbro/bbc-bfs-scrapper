@@ -113,6 +113,7 @@ export default class Server {
    * Stops the server
    */
   stop() {
+    console.log("💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀")
     clearInterval(this._timeout)
     process.exit(0)
   }
@@ -124,10 +125,11 @@ export default class Server {
   start(seeds) {
     this._links.enqueue(seeds)
     this._timeout = setInterval(async () => {
-      if (this._links.size > 1000) {
-        console.log("😴 Too much to process")
-      }
       let spider, robotsTXT
+      if (this._spiders.length > 0 && this._links.size > 1000) {
+        console.log("🥱", "Too much links let other finish")
+        return
+      }
       let link = this._links.dequeue()
       if (link) {
         if (this._links.size > 0) {
@@ -137,6 +139,10 @@ export default class Server {
           } else {
             return
           }
+        }
+        if (this._links.size > 100 && !(await this.notExistsInDB(link))) {
+          console.log("🐱‍🏍", "Already exists in dababase")
+          return
         }
         if (this._visitedCache[link.resolve()]) {
           console.log("😎 Already Visited")
@@ -158,7 +164,7 @@ export default class Server {
         } catch (err) {
           console.error(err.message)
           if (this._canExit()) {
-            process.exit(2)
+            this.stop()
           }
           return
         }
@@ -172,7 +178,7 @@ export default class Server {
           )
           console.error(err.message)
           if (this._canExit()) {
-            process.exit(2)
+            this.stop()
           }
           return
         }
@@ -199,9 +205,23 @@ export default class Server {
           console.log(`💩 Failed to save the obtained data`)
         }
         if (this._canExit()) {
-          // this.stop()
+          this.stop()
         }
       }
-    }, 3000)
+    }, 500)
+  }
+  /**
+   * Checks if the link and associated data already exists in database
+   * @param {Link} link
+   */
+  async notExistsInDB(link) {
+    try {
+      const resp = await Axios.get(
+        `http://localhost:8080/articles?url=${link.resolve()}`
+      )
+      return resp.data.length == 0
+    } catch (error) {
+      return true
+    }
   }
 }

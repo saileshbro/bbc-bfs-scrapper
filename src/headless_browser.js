@@ -3,7 +3,7 @@ const puppeteer = require("puppeteer")
 export default class HeadlessBrowser {
   constructor() {}
   async initialize() {
-    this._browser = await puppeteer.launch({ headless: false })
+    this._browser = await puppeteer.launch()
   }
   async close() {
     await this._browser.close()

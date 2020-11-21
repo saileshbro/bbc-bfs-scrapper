@@ -3,7 +3,7 @@ import Link from "./link_collection/link"
 import Server from "./scraper/server"
 const server = new Server()
 
-const link = new Link("https://www.bbc.com")
+const link = new Link("https://www.bbc.com", "/news/world-middle-east-53223523")
 ;(async () => {
   await HeadlessBrowser.instance.initialize()
   try {

@@ -77,8 +77,14 @@ export default class BBCPurifier extends Purifier {
       this._dataObject.subCategory
     ) {
       this._dataObject.url = this.link.resolve()
-      await Axios.post("http://localhost:8080/articles", this._dataObject)
-      console.log(`😍 Saved successfully`)
+      // check existing
+      const isExists = await Axios.get(
+        `http://localhost:8080/articles?url=${this._dataObject.url}`
+      )
+      if (isExists.data.length === 0) {
+        await Axios.post("http://localhost:8080/articles", this._dataObject)
+        console.log(`😍 Saved successfully`)
+      }
     } else {
       await Axios.post("http://localhost:8080/purifierErrorLinks", {
         url: this.link.resolve(),
