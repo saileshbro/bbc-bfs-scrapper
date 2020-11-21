@@ -27,7 +27,6 @@ export default class Spider {
     try {
       await this._scrapeHTML()
     } catch (error) {
-      console.log(error)
       throw new Error(
         "Spider Error! Couldn't fetch new links! Please check the internet connection."
       )

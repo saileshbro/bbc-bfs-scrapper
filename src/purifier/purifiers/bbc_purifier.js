@@ -37,14 +37,14 @@ export default class BBCPurifier extends Purifier {
       this.link.resolve().startsWith("https://www.bbc.com/worklife/article/")
     ) {
       category =
-        $(`meta[name="twitter:site"]`)?.attr("content").replace("@BBC_", "") ??
+        $(`meta[name="twitter:site"]`)?.attr("content")?.replace("@BBC_", "") ??
         ""
       headline = $(`meta[property="og:title"]`)?.attr("content") ?? ""
       subCategory = $("div.article-labels >a:last-child")?.text()?.trim() ?? ""
     }
     if (this.link.resolve().startsWith("https://www.bbc.com/future/article/")) {
       category =
-        $(`meta[name="twitter:site"]`)?.attr("content").replace("@BBC_", "") ??
+        $(`meta[name="twitter:site"]`)?.attr("content")?.replace("@BBC_", "") ??
         ""
       headline = $(`meta[property="og:title"]`)?.attr("content") ?? ""
       subCategory = $("div.article-labels >a:last-child")?.text()?.trim() ?? ""

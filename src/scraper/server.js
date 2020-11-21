@@ -126,10 +126,6 @@ export default class Server {
     this._links.enqueue(seeds)
     this._timeout = setInterval(async () => {
       let spider, robotsTXT
-      if (this._spiders.length > 0 && this._links.size > 1000) {
-        console.log("🥱", "Too much links let other finish")
-        return
-      }
       let link = this._links.dequeue()
       if (link) {
         if (this._links.size > 0) {
@@ -141,7 +137,6 @@ export default class Server {
           }
         }
         if (this._links.size > 100 && !(await this.notExistsInDB(link))) {
-          console.log("🐱‍🏍", "Already exists in dababase")
           return
         }
         if (this._visitedCache[link.resolve()]) {
@@ -183,9 +178,12 @@ export default class Server {
           return
         }
         console.log(`✔ ${spider.horizon.size} links collected.`)
-        const specialLinks = spider.horizon.links.filter((link) =>
-          new FilterFactory.createFilter(link).isLinkValid()
-        )
+        const specialLinks = spider.horizon.links.filter((link) => {
+          if (this._visitedCache[link.resolve()]) {
+            return false
+          }
+          return new FilterFactory.createFilter(link).isLinkValid()
+        })
         this._links.enqueue(specialLinks)
         this._links.removeDuplicates()
         this._spiders = this._spiders.filter(

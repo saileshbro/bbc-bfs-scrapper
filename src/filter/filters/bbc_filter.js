@@ -15,12 +15,12 @@ export default class BBCFilter extends LinkFilter {
     }
 
     for (const url of _invalidBBCUrls) {
-      if (this._link.resolve().startsWith(url)) {
+      if (this._link.resolve().includes(url)) {
         return false
       }
     }
 
-    if (/([0-9])\d+/g.test(this._link.resolve())) {
+    if (/([0-9])\d{3,}/g.test(this._link.resolve())) {
       return true
     } else {
       return false
@@ -28,39 +28,39 @@ export default class BBCFilter extends LinkFilter {
   }
 }
 const _invalidBBCUrls = [
-  "http://www.bbc.com/travel/gallery",
-  "https://www.bbc.com/afrique",
-  "https://www.bbc.com/arabic",
-  "https://www.bbc.com/azeri",
-  "https://www.bbc.com/bengali",
-  "https://www.bbc.com/burmese",
-  "https://www.bbc.com/false",
-  "https://www.bbc.com/future/bespoke",
-  "https://www.bbc.com/gahuza",
-  "https://www.bbc.com/hausa",
-  "https://www.bbc.com/hindi",
-  "https://www.bbc.com/indonesia",
-  "https://www.bbc.com/japanese",
-  "https://www.bbc.com/kyrgyz",
-  "https://www.bbc.com/marathi",
-  "https://www.bbc.com/mundo",
-  "https://www.bbc.com/nepali",
-  "https://www.bbc.com/news/av/election-us",
-  "https://www.bbc.com/news/election/us2020/",
-  "https://www.bbc.com/pashto",
-  "https://www.bbc.com/persian",
-  "https://www.bbc.com/portuguese",
-  "https://www.bbc.com/reel",
-  "https://www.bbc.com/russian",
-  "https://www.bbc.com/sinhala",
-  "https://www.bbc.com/somali",
-  "https://www.bbc.com/swahili",
-  "https://www.bbc.com/tamil",
-  "https://www.bbc.com/turkce",
-  "https://www.bbc.com/ukrainian",
-  "https://www.bbc.com/urdu",
-  "https://www.bbc.com/uzbek",
-  "https://www.bbc.com/vietnamese",
-  "https://www.bbc.com/weather",
-  "https://www.bbc.com/zhongwen/simp",
+  "www.bbc.com/travel/gallery",
+  "www.bbc.com/afrique",
+  "www.bbc.com/arabic",
+  "www.bbc.com/azeri",
+  "www.bbc.com/bengali",
+  "www.bbc.com/burmese",
+  "www.bbc.com/false",
+  "www.bbc.com/future/bespoke",
+  "www.bbc.com/gahuza",
+  "www.bbc.com/hausa",
+  "www.bbc.com/hindi",
+  "www.bbc.com/indonesia",
+  "www.bbc.com/japanese",
+  "www.bbc.com/kyrgyz",
+  "www.bbc.com/marathi",
+  "www.bbc.com/mundo",
+  "www.bbc.com/nepali",
+  "www.bbc.com/news/av/election-us",
+  "www.bbc.com/news/election/us2020/",
+  "www.bbc.com/pashto",
+  "www.bbc.com/persian",
+  "www.bbc.com/portuguese",
+  "www.bbc.com/reel",
+  "www.bbc.com/russian",
+  "www.bbc.com/sinhala",
+  "www.bbc.com/somali",
+  "www.bbc.com/swahili",
+  "www.bbc.com/tamil",
+  "www.bbc.com/turkce",
+  "www.bbc.com/ukrainian",
+  "www.bbc.com/urdu",
+  "www.bbc.com/uzbek",
+  "www.bbc.com/vietnamese",
+  "www.bbc.com/weather",
+  "www.bbc.com/zhongwen/simp",
 ]

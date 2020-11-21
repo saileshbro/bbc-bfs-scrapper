@@ -4,7 +4,7 @@
   "description": "bbc-bfs-scrapper is a news aggregator application which scrapes news articles from BBC.com respecting the robots.txt.",
   "main": "src/app.js",
   "scripts": {
-    "dev": "nodemon --config nodemon.json --exec babel-node ./src/app.js",
+    "dev": "nodemon --config nodemon.json --exec babel-node ./src/app.js --max-old-space-size=4096",
     "test": "./node_modules/.bin/mocha --require @babel/register",
     "test:link": "./node_modules/.bin/mocha --require @babel/register test/test-link.js -r chai/register-expect",
     "test:links-collection": "./node_modules/.bin/mocha --require @babel/register test/test-links-collection.js -r chai/register-expect",
