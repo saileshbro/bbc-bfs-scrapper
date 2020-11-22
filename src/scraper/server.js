@@ -200,13 +200,14 @@ export default class Server {
         try {
           await purifier.persistPurified()
         } catch (error) {
+          console.log(error)
           console.log(`💩 Failed to save the obtained data`)
         }
         if (this._canExit()) {
           this.stop()
         }
       }
-    }, 500)
+    }, 2500)
   }
   /**
    * Checks if the link and associated data already exists in database

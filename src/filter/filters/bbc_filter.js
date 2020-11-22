@@ -10,6 +10,7 @@ export default class BBCFilter extends LinkFilter {
     super(link)
   }
   isLinkValid() {
+    if (!this._link.resolve().startsWith("http")) return false
     if (this._link.resolve().includes("live")) {
       return false
     }
@@ -20,7 +21,7 @@ export default class BBCFilter extends LinkFilter {
       }
     }
 
-    if (/([0-9])\d{3,}/g.test(this._link.resolve())) {
+    if (/([0-9])\d{4,}/g.test(this._link.resolve())) {
       return true
     } else {
       return false
