@@ -46,3 +46,4 @@ dist
 .tern-port
 .vscode-test
 build
+db.json
