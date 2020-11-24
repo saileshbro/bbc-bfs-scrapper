@@ -6,21 +6,22 @@ Steps to run
 - Add this inside `db.json`
 
 ```json
-  {
-    "purifierErrorLinks": [],
-    "noCategory": [],
-    "articles": []
-  }
-
+{
+  "purifierErrorLinks": [],
+  "noCategory": [],
+  "articles": []
+}
 ```
 
 - Run These commands
+
 ```bash
 yarn install
 yarn run json-server
 ```
 
 - In new terminal window run this command
+
 ```bash
 yarn run dev
 ```

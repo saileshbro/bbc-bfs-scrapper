@@ -29,6 +29,7 @@ export default class BBCFilter extends LinkFilter {
   }
 }
 const _invalidBBCUrls = [
+  "www.bbc.co.uk",
   "www.bbc.com/travel/gallery",
   "www.bbc.com/afrique",
   "www.bbc.com/arabic",
@@ -63,5 +64,5 @@ const _invalidBBCUrls = [
   "www.bbc.com/uzbek",
   "www.bbc.com/vietnamese",
   "www.bbc.com/weather",
-  "www.bbc.com/zhongwen/simp",
+  "www.bbc.com/zhongwen",
 ]

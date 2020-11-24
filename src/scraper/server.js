@@ -114,6 +114,7 @@ export default class Server {
    */
   stop() {
     console.log("💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀")
+
     clearInterval(this._timeout)
     process.exit(0)
   }
@@ -131,7 +132,7 @@ export default class Server {
         if (this._links.size > 0) {
           const linkFilter = FilterFactory.createFilter(link)
           if (linkFilter.isLinkValid()) {
-            console.log("🍒", link.resolve())
+            console.log("🍒🍒🍒🍒🍒🍒", link.resolve())
           } else {
             return
           }
@@ -140,7 +141,8 @@ export default class Server {
           return
         }
         if (this._visitedCache[link.resolve()]) {
-          console.log("😎 Already Visited")
+          console.log("😎😎😎😎😎😎 Already Visited")
+
           return
         } else {
           this._visitedCache[link.resolve()] = true
@@ -177,7 +179,8 @@ export default class Server {
           }
           return
         }
-        console.log(`✔ ${spider.horizon.size} links collected.`)
+        console.log(`🎉🎉🎉🎉🎉🎉 ${spider.horizon.size} links collected.`)
+
         const specialLinks = spider.horizon.links.filter((link) => {
           if (this._visitedCache[link.resolve()]) {
             return false
@@ -189,7 +192,8 @@ export default class Server {
         this._spiders = this._spiders.filter(
           (s) => !s.link.isEqual(spider.link)
         )
-        console.log(`🔗 ${this._links.size} links pending.`)
+        console.log(`🔗🔗🔗🔗🔗🔗 ${this._links.size} links pending.`)
+
         let purifier
         try {
           purifier = PurifierFactory.createPurifier(spider.html, link)
@@ -201,13 +205,13 @@ export default class Server {
           await purifier.persistPurified()
         } catch (error) {
           console.log(error)
-          console.log(`💩 Failed to save the obtained data`)
+          console.log(`💩💩💩💩💩💩 Failed to save the obtained data`)
         }
         if (this._canExit()) {
           this.stop()
         }
       }
-    }, 2500)
+    }, 3500)
   }
   /**
    * Checks if the link and associated data already exists in database

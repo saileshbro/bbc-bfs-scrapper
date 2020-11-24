@@ -42,9 +42,14 @@ export default class Spider {
           baseURL = url.origin
           path = url.pathname
         }
-        const newLink = new Link(baseURL, path)
-        if (!this._link.isEqual(newLink)) {
-          this._horizon.enqueue(newLink)
+        try {
+          new URL(path, baseURL).href
+          const newLink = new Link(baseURL, path)
+          if (!this._link.isEqual(newLink)) {
+            this._horizon.enqueue(newLink)
+          }
+        } catch (error) {
+          console.log("🎆🎆🎆🎆🎆🎆", "Invalid url fetched")
         }
       }
     })

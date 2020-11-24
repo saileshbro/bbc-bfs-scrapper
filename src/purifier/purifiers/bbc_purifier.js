@@ -89,19 +89,19 @@ export default class BBCPurifier extends Purifier {
       if (isExists.data.length === 0) {
         if (this._dataObject.subCategory) {
           await Axios.post("http://localhost:8080/articles", this._dataObject)
-          console.log(`😍 Saved successfully`)
+          console.log(`😍😍😍😍😍😍 Saved successfully`)
         } else {
           await Axios.post("http://localhost:8080/noCategory", {
             url: this.link.resolve(),
           })
-          console.log(`😭 Subtitle not found`)
+          console.log(`😭😭😭😭😭😭 Subategory not found`)
         }
       }
     } else {
       await Axios.post("http://localhost:8080/purifierErrorLinks", {
         url: this.link.resolve(),
       })
-      console.log("🙄", "Purifier Improvement Needed")
+      console.log("🙄🙄🙄🙄🙄🙄", "Purifier Improvement Needed")
     }
   }
 }
