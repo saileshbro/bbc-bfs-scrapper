@@ -8,3 +8,4 @@ yarn install
 yarn run json-server
 yarn run dev
 ```
+You can use `npm` if you prefer `npm` just replace `yarn` with `npm`
