@@ -6,22 +6,22 @@ export default class BBCFilter extends LinkFilter {
    * Checks if the link is valid or not
    * @param {Link} link
    */
-  constructor(link) {
+  constructor(link: Link) {
     super(link)
   }
-  isLinkValid() {
-    if (!this._link.resolve().startsWith("http")) return false
-    if (this._link.resolve().includes("live")) {
+  isLinkValid(): boolean {
+    if (!this.link.resolve().startsWith("http")) return false
+    if (this.link.resolve().includes("live")) {
       return false
     }
 
     for (const url of _invalidBBCUrls) {
-      if (this._link.resolve().includes(url)) {
+      if (this.link.resolve().includes(url)) {
         return false
       }
     }
 
-    if (/([0-9])\d{4,}/g.test(this._link.resolve())) {
+    if (/([0-9])\d{4,}/g.test(this.link.resolve())) {
       return true
     } else {
       return false

@@ -1,13 +1,14 @@
-// import HeadlessBrowser from './../src/headless_browser';
-import Server from "./../src/scraper/server"
+import Server from "../src/scraper/server"
 import chai, { expect } from "chai"
-chai.use(require("chai-as-promised"))
+import chaiPromised from "chai-as-promised"
+chai.use(chaiPromised)
 chai.should()
 import Link from "../src/link_collection/link"
+import Spider from "../src/scraper/spider"
 describe("Server", function () {
   const server = new Server()
   context("#spawnSpider", function () {
-    let spider = server._spawnSpider(new Link("https://facebook.com"), "*")
+    const spider = server._spawnSpider(new Link("https://facebook.com"), "*")
     it("should return a promise", function () {
       expect(spider instanceof Promise).to.be.true
     })

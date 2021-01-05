@@ -8,14 +8,14 @@ export default class FilterFactory {
    * @param {Link} link - The key to identify the kind of factory
    * @returns {LinkFilter} - The concrete LinkFilter object
    */
-  static createFilter(link) {
+  static createFilter(link: Link): LinkFilter {
     if (link.baseURL.includes("bbc.com")) {
       return new BBCFilter(link)
     } else {
-      return new LinkFilter(link)
+      throw new Error(`Filter for the link ${link.resolve()} not found!`)
     }
   }
   constructor() {
-    throw new Error("Purifier Error! Abstract Method!")
+    throw new Error("Factory Error! Abstract Method!")
   }
 }

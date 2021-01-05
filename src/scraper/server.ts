@@ -4,14 +4,19 @@
  * @module src/scraper/server
  */
 import Link from "../link_collection/link"
-import LinkCollection from "./../link_collection/link_collection"
+import LinkCollection from "../link_collection/link_collection"
 import Spider from "./spider"
-import { RobotsCache, RobotsParser } from "./../parsers/robot_parser"
+import { RobotsCache, RobotsParser } from "../parsers/robot_parser"
 import Axios from "axios"
 import PurifierFactory from "../purifier/purifier_factory"
 import FilterFactory from "../filter/filter_factory"
-
+import LinkFilter from "../filter/link_filter"
 export default class Server {
+  private _links: LinkCollection
+  private _robotsCache: RobotsCache
+  private _spiders: Spider[]
+  private _visitedCache: Map<string, boolean>
+  private _timeout?: NodeJS.Timeout
   /**
    * Create a new Server object
    */
@@ -36,7 +41,7 @@ export default class Server {
      */
     this._spiders = []
 
-    this._visitedCache = {}
+    this._visitedCache = new Map<string, boolean>()
   }
   /**
    * This method spawns a new spider to visit given link
@@ -45,10 +50,10 @@ export default class Server {
    * @returns {Promise<Spider>} - Promise object represents a spider
    * @private
    */
-  _spawnSpider(link, robotsTXT) {
+  _spawnSpider(link: Link, robotsTXT: string | undefined): Promise<Spider> {
     return new Promise((resolve, reject) => {
-      let spider, crawlDelay
-      let robotsParser = new RobotsParser(link, robotsTXT)
+      let spider: Spider, crawlDelay: number
+      const robotsParser = new RobotsParser(link, robotsTXT ?? "")
       if (robotsParser.isDisallowed(link)) {
         return reject(
           new Error(
@@ -79,8 +84,8 @@ export default class Server {
    * @returns {Promise<string>} - Promise object represents the robots string
    * @private
    */
-  async _getRobotsTXT(url) {
-    let robotsTXT
+  async _getRobotsTXT(url: Link): Promise<string> {
+    let robotsTXT: string
     try {
       const resp = await Axios.get(
         new Link(url.baseURL, "robots.txt").resolve()
@@ -105,17 +110,18 @@ export default class Server {
    * @returns {boolean}
    * @private
    */
-  _canExit() {
+  _canExit(): boolean {
     if (this._spiders.length === 0 && this._links.size === 0) return true
     return false
   }
   /**
    * Stops the server
    */
-  stop() {
+  stop(): void {
     console.log("💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀")
-
-    clearInterval(this._timeout)
+    if (this._timeout) {
+      clearInterval(this._timeout)
+    }
     process.exit(0)
   }
   /**
@@ -123,31 +129,36 @@ export default class Server {
    * This method is asynchronous and doesn't return any value
    * @param {Link|Link[]} seeds - The seed links to start the server with
    */
-  start(seeds) {
+  start(seeds: Link | Link[]): void {
     this._links.enqueue(seeds)
     this._timeout = setInterval(async () => {
-      let spider, robotsTXT
-      let link = this._links.dequeue()
+      let spider: Spider, robotsTXT: string | undefined
+      const link = this._links.dequeue()
       if (link) {
         if (this._links.size > 0) {
-          const linkFilter = FilterFactory.createFilter(link)
-          if (linkFilter.isLinkValid()) {
-            console.log("🍒🍒🍒🍒🍒🍒", link.resolve())
-          } else {
-            return
+          try {
+            const linkFilter = FilterFactory.createFilter(link)
+            if (linkFilter.isLinkValid()) {
+              console.log("🍒🍒🍒🍒🍒🍒", link.resolve())
+            } else {
+              return
+            }
+          } catch (error) {
+            console.log(error.message)
           }
         }
         if (this._links.size > 100 && !(await this.notExistsInDB(link))) {
           return
         }
-        if (this._visitedCache[link.resolve()]) {
+        if (this._visitedCache.get(link.resolve())) {
           console.log("😎😎😎😎😎😎 Already Visited")
 
           return
         } else {
-          this._visitedCache[link.resolve()] = true
+          this._visitedCache.set(link.resolve(), true)
         }
-        if ((robotsTXT = this._robotsCache.findRobotFor(link) === undefined)) {
+        robotsTXT = this._robotsCache.findRobotFor(link)
+        if (!robotsTXT) {
           try {
             robotsTXT = await this._getRobotsTXT(link)
           } catch (err) {
@@ -182,10 +193,13 @@ export default class Server {
         console.log(`🎉🎉🎉🎉🎉🎉 ${spider.horizon.size} links collected.`)
 
         const specialLinks = spider.horizon.links.filter((link) => {
-          if (this._visitedCache[link.resolve()]) {
+          if (this._visitedCache.get(link.resolve())) {
             return false
           }
-          return new FilterFactory.createFilter(link).isLinkValid()
+          try {
+            const filter: LinkFilter = FilterFactory.createFilter(link)
+            return filter.isLinkValid()
+          } catch (error) {}
         })
         this._links.enqueue(specialLinks)
         this._links.removeDuplicates()
@@ -217,7 +231,7 @@ export default class Server {
    * Checks if the link and associated data already exists in database
    * @param {Link} link
    */
-  async notExistsInDB(link) {
+  async notExistsInDB(link: Link): Promise<boolean> {
     try {
       const resp = await Axios.get(
         `http://localhost:8080/articles?url=${link.resolve()}`

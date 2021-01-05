@@ -79,14 +79,17 @@ describe("RobotsCache", function () {
 
     it("should add robots.txt of given link to cache", function () {
       robotsCache.update(twitter, "This is the mock robots.txt of twitter")
-      expect(!!robotsCache._cache[twitter.baseURL]).to.be.true
+      expect(robotsCache.cache.get(twitter.baseURL)).to.be.string
+      expect(robotsCache.cache.get(twitter.baseURL)).to.not.be.undefined
     })
 
     it("should contain old and add new robots.txt of given links", function () {
       robotsCache.update(wikipedia, "This is the mock robots.txt of wikipedia")
-      expect(!!robotsCache._cache[twitter.baseURL]).to.be.true
-      expect(!!robotsCache._cache[wikipedia.baseURL]).to.be.true
-      expect(!!robotsCache._cache[nodejs.baseURL]).to.be.false
+      expect(robotsCache.cache.get(twitter.baseURL)).to.be.string
+      expect(robotsCache.cache.get(twitter.baseURL)).to.not.be.undefined
+      expect(robotsCache.cache.get(wikipedia.baseURL)).to.be.string
+      expect(robotsCache.cache.get(wikipedia.baseURL)).to.not.be.undefined
+      expect(robotsCache.cache.get(nodejs.baseURL)).to.be.undefined
     })
   })
 

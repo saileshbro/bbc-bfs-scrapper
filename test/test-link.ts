@@ -1,6 +1,5 @@
 import { expect } from "chai"
 import Link from "../src/link_collection/link"
-
 describe("Link", function () {
   context("#resolve()", function () {
     it("should return https://wikipedia.org/", function () {
@@ -33,9 +32,9 @@ describe("Link", function () {
   })
 
   context("#isEqual", function () {
-    let link1 = new Link("https://www.npmjs.com", "/package/request")
-    let link2 = new Link("https://www.npmjs.com", "/package/request")
-    let link3 = new Link("https://en.wikipedia.org")
+    const link1 = new Link("https://www.npmjs.com", "/package/request")
+    const link2 = new Link("https://www.npmjs.com", "/package/request")
+    const link3 = new Link("https://en.wikipedia.org")
     it("should return true", function () {
       expect(link1.isEqual(link2)).to.be.true
     })

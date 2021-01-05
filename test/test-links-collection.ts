@@ -1,10 +1,10 @@
 import { expect } from "chai"
-import Link from "./../src/link_collection/link"
-import LinkCollection from "./../src/link_collection/link_collection"
+import Link from "../src/link_collection/link"
+import LinkCollection from "../src/link_collection/link_collection"
 
 describe("LinkCollection", function () {
   context("#create()", function () {
-    let linkscol = LinkCollection.create()
+    const linkscol = LinkCollection.create()
     it("should return an object", function () {
       expect(linkscol).to.be.an("object")
     })
@@ -33,15 +33,14 @@ describe("LinkCollection", function () {
   })
 
   context("#enqueue", function () {
-    let links = [
+    const links = [
       new Link("https://vim.org", "/about"),
       new Link("https://espn.in"),
       new Link("https://nodejs.org", "/download"),
     ]
-    let linkCollection = LinkCollection.create()
+    const linkCollection = LinkCollection.create()
     it("should not add undefined value", function () {
-      linkCollection.enqueue(undefined)
-      expect(linkCollection._links.length).to.be.equals(0)
+      expect(linkCollection.links.length).to.be.equals(0)
       linkCollection.links.forEach((link) => {
         expect(link.baseURL).to.be.a("string")
         expect(link.path).to.be.a("string")
@@ -67,7 +66,7 @@ describe("LinkCollection", function () {
     const vimLink = new Link("https://vim.org", "/about")
     const espnLink = new Link("https://espn.in")
 
-    let linkCollection = LinkCollection.create()
+    const linkCollection = LinkCollection.create()
     linkCollection.enqueue(vimLink)
     linkCollection.enqueue([espnLink])
     it("should remove and return from front of the list", function () {
@@ -83,7 +82,7 @@ describe("LinkCollection", function () {
   })
 
   context("#getLink", function () {
-    let links = LinkCollection.create()
+    const links = LinkCollection.create()
     const vimAboutLink = new Link("https://vim.org", "/about")
     const nodejsDownloadLink = new Link("https://nodejs.org", "/download")
     links.enqueue(vimAboutLink)
@@ -95,7 +94,7 @@ describe("LinkCollection", function () {
   })
 
   context("#containsLink", function () {
-    let links = LinkCollection.create()
+    const links = LinkCollection.create()
     const link = new Link("https://medium.com")
 
     it("should return true", function () {
@@ -105,7 +104,7 @@ describe("LinkCollection", function () {
   })
 
   context("#get size()", function () {
-    let links = LinkCollection.create()
+    const links = LinkCollection.create()
     links.enqueue(new Link("https://wiki.org", "/nodejs"))
     links.enqueue(new Link("https://wiki.org", "/php"))
     links.enqueue(new Link("https://wiki.org", "/perl"))
@@ -115,7 +114,7 @@ describe("LinkCollection", function () {
   })
 
   context("#removeLink", function () {
-    let linkCol = LinkCollection.create()
+    const linkCol = LinkCollection.create()
     it("should remove the link from the collection", function () {
       const link = new Link("https://wikipedia.org")
       linkCol.removeLink(link)
@@ -124,25 +123,26 @@ describe("LinkCollection", function () {
   })
 
   context("#iterator interface", function () {
-    let links = new LinkCollection([
+    const links = new LinkCollection([
       new Link("https://wiki.org", "/nodejs"),
       new Link("https://wiki.org", "/php"),
       new Link("https://wiki.org", "/perl"),
     ])
     it("should return an iterator", function () {
-      for (let link of links) {
+      for (const link of links) {
         expect(link).to.be.an("object")
-        expect(link.baseURL).to.be.a("string")
+        expect(link).to.not.be.undefined
+        expect(link?.baseURL).to.be.a("string")
       }
     })
   })
   context("#removeDuplicates", () => {
-    let links = LinkCollection.create()
+    const links = LinkCollection.create()
     links.enqueue(new Link("https://wiki.org", "/nodejs"))
     links.enqueue(new Link("https://wiki.org", "/php"))
     links.enqueue(new Link("https://wiki.org", "/nodejs"))
     links.enqueue(new Link("https://wiki.org", "/node"))
-    let linksNew = [
+    const linksNew = [
       new Link("https://wiki.org", "/nodejs"),
       new Link("https://wiki.org", "/php"),
       new Link("https://wiki.org", "/perl"),
@@ -152,12 +152,12 @@ describe("LinkCollection", function () {
       links.removeDuplicates()
       expect(links.size).to.equals(4)
     })
-    let oldLinks = new LinkCollection([
+    const oldLinks = new LinkCollection([
       new Link("https://en.wikipedia.org", "/wiki/PHP"),
       new Link("https://nodejs.org"),
       new Link("https://medium.com"),
     ])
-    let newLinks = [
+    const newLinks = [
       new Link(
         "https://en.wikipedia.org",
         "/wiki/Python_%28programming_language%29"
