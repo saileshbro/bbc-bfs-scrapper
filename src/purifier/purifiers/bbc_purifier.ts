@@ -2,17 +2,23 @@ import Purifier from "../purifier"
 import * as cheerio from "cheerio"
 import Axios from "axios"
 import Link from "../../link_collection/link"
-
+interface BBCDataObject {
+  headline: string
+  subCategory: string
+  category: string
+  url?: string
+}
 export default class BBCPurifier extends Purifier {
+  private _dataObject?: BBCDataObject
   /**
    *
    * @param {string} html
    * @param {Link} link
    */
-  constructor(html, link) {
+  constructor(html: string, link: Link) {
     super(html, link)
   }
-  purify() {
+  purify(): BBCDataObject | Record<string, string> {
     const $ = cheerio.load(this.html)
     let headline, subCategory, category
     if (this.link.resolve().includes("www.bbc.com/news/av/")) {
@@ -76,13 +82,14 @@ export default class BBCPurifier extends Purifier {
       subCategory = $(`meta[property="article:section"]`)?.attr("content") ?? ""
       return (this._dataObject = { headline, subCategory, category })
     }
+    return {}
   }
-  async persistPurified() {
+  async persistPurified(): Promise<void> {
     this._dataObject?.category?.trim()
     this._dataObject?.headline?.trim()
     this._dataObject?.subCategory?.trim()
     if (this._dataObject?.category && this._dataObject?.headline) {
-      this._dataObject.url = this.link.resolve()
+      this._dataObject
       const isExists = await Axios.get(
         `http://localhost:8080/articles?url=${this._dataObject.url}`
       )

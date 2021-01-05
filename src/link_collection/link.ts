@@ -9,10 +9,12 @@ import { URL } from "url"
  * @class
  */
 export default class Link {
+  private _baseURL: string
+  private _path: string
   /**
    * Create a new Link Object
    */
-  constructor(baseURL, path = "/") {
+  constructor(baseURL: string, path = "/") {
     /**
      * The base URL of the link
      * @type {string}
@@ -30,21 +32,21 @@ export default class Link {
    * Getter to get the value of this._baseURL
    * @return {string}
    */
-  get baseURL() {
+  get baseURL(): string {
     return this._baseURL
   }
   /**
    * Getter to get the value of this._path
    * @return {string}
    */
-  get path() {
+  get path(): string {
     return this._path
   }
   /**
    * Getter to get the hostname of the url
    * @return {string}
    */
-  get hostName() {
+  get hostName(): string {
     return new URL(this._path, this._baseURL).hostname.replace("www.", "")
   }
   /**
@@ -52,7 +54,7 @@ export default class Link {
    * @param {Link} link - The other link to test against this link
    * @returns {boolean}
    */
-  hasSameBaseURL(link) {
+  hasSameBaseURL(link: Link): boolean {
     return this._baseURL === link._baseURL
   }
   /**
@@ -60,7 +62,7 @@ export default class Link {
    * @param {Link} link - The other link to test against this link
    * @returns {boolean}
    */
-  isEqual(link) {
+  isEqual(link: Link): boolean {
     if (!link || !(link instanceof Link)) return false
     if (this._baseURL !== link.baseURL || this._path !== link.path) return false
     return true
@@ -69,7 +71,7 @@ export default class Link {
    * Resolve the current link object into a link URL string
    * @return {string} - A link href string
    */
-  resolve() {
+  resolve(): string {
     return new URL(this._path, this._baseURL).href
   }
 }

@@ -1,13 +1,17 @@
 import Link from "../link_collection/link"
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const robotsParser = require("robots-parser")
 
 export class RobotsParser {
+  private _url: string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private _parser: any
   /**
    * The constructor for RobotsParser class
    * @param {Link} link - The url to which the robots.txt string belongs
    * @param {string} robotsTXT - The robots.txt string of the url
    */
-  constructor(link, robotsTXT) {
+  constructor(link: Link, robotsTXT: string) {
     /**
      * The link object for which to fetch the robots.txt document
      * @type {string}
@@ -28,7 +32,7 @@ export class RobotsParser {
    * @param {string} [userAgent = *] - The user-agent to test for scrapability
    * @returns {boolean}
    */
-  isDisallowed(link, userAgent = "*") {
+  isDisallowed(link: Link, userAgent = "*"): boolean {
     return this._parser.isDisallowed(link.resolve(), userAgent)
   }
   /**
@@ -36,7 +40,7 @@ export class RobotsParser {
    * @param {string} [userAgent = *] - The bot to test for
    * @returns {number}
    */
-  getCrawlDelay(userAgent = "*") {
+  getCrawlDelay(userAgent = "*"): number {
     return this._parser.getCrawlDelay(userAgent)
   }
 }
@@ -46,6 +50,7 @@ export class RobotsParser {
  * @class
  */
 export class RobotsCache {
+  private _cache: Map<string, string>
   /**
    * The constructor for creating the cache object
    * It takes no arguments as the robots.txt object is
@@ -54,10 +59,8 @@ export class RobotsCache {
   constructor() {
     /**
      * This property holds the bundle of link and robots.txt for the given link
-     * @type {LinkRobotBundle[]}
-     * @private
      */
-    this._cache = {}
+    this._cache = new Map<string, string>()
   }
   /**
    * Update the existing cache with new link and its corresponding
@@ -65,10 +68,10 @@ export class RobotsCache {
    * @param {Link} link - The link for the robots.txt string
    * @param {string} robotsTXT - The robots.txt string for the link
    */
-  update(link, robotsTXT) {
+  update(link: Link, robotsTXT: string): void {
     if (link.baseURL === undefined) throw new Error("Invalid link!")
     if (typeof robotsTXT !== "string") throw new Error("Invalid robots.txt!")
-    this._cache[link.baseURL] = robotsTXT
+    this._cache.set(link.baseURL, robotsTXT)
   }
 
   /**
@@ -76,7 +79,10 @@ export class RobotsCache {
    * @param {Link} link - The link object for the required url
    * @returns {string|undefined}
    */
-  findRobotFor(link) {
-    return this._cache[link.baseURL]
+  findRobotFor(link: Link): string | undefined {
+    return this._cache.get(link.baseURL)
+  }
+  get cache(): Map<string, string> {
+    return this._cache
   }
 }

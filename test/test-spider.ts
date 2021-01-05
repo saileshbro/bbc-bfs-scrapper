@@ -12,11 +12,11 @@ describe("Spider class", function () {
     return HeadlessBrowser.instance.initialize()
   })
   after(function () {
-    return HeadlessBrowser.instance._browser.close()
+    return HeadlessBrowser.instance.browser?.close()
   })
   context("#spawn", function () {
     it("should return a Spider object", function () {
-      let spider = Spider.spawn(link)
+      const spider = Spider.spawn(link)
       expect(spider instanceof Spider).to.be.true
     })
   })
@@ -30,8 +30,8 @@ describe("Spider class", function () {
     it("should correctly handle absolute and relative urls", function () {
       let isURLValid = true
       spider.getNewLinks().then((horizon) => {
-        for (let link of horizon) {
-          if (link.path.startsWith("http")) {
+        for (const link of horizon) {
+          if (link?.path.startsWith("http")) {
             isURLValid = false
             break
           }
@@ -43,8 +43,9 @@ describe("Spider class", function () {
     it("should not have the same link as the current seed", function () {
       let isIdentical = false
       spider.getNewLinks().then((horizon) => {
-        for (let link of horizon) {
+        for (const link of horizon) {
           if (
+            link &&
             link.baseURL === spider.link.baseURL &&
             link.path === spider.link.path
           ) {

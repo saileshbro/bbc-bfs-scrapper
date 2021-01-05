@@ -9,7 +9,7 @@ export default class PurifierFactory {
    * @param {Link} link - The key to identify the kind of factory
    * @returns {Purifier} - The concrete purifier object
    */
-  static createPurifier(html, link) {
+  static createPurifier(html: string, link: Link): Purifier {
     if (link.baseURL.includes("bbc.com")) {
       return new BBCPurifier(html, link)
     } else {
