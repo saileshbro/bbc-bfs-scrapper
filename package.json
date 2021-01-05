@@ -7,7 +7,7 @@
     "json-server": "json-server -p 8080 ./db.json",
     "build": "webpack",
     "start": "node ./dist/main.js",
-    "dev": "nodemon --max-old-space-size=4096",
+    "dev": "nodemon ./src/app.ts --max-old-space-size=4096",
     "test": "mocha --require ts-node/register --extensions ts,tsx  src 'test/**/*.{ts,tsx}'"
   },
   "repository": {

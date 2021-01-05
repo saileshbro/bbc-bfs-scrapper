@@ -147,7 +147,7 @@ export default class Server {
             console.log(error.message)
           }
         }
-        if (this._links.size > 100 && !(await this.notExistsInDB(link))) {
+        if (this._links.size > 100 && (await this.notExistsInDB(link))) {
           return
         }
         if (this._visitedCache.get(link.resolve())) {
