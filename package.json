@@ -5,8 +5,8 @@
   "main": "src/app.ts",
   "scripts": {
     "json-server": "json-server -p 8080 ./db.json",
-    "build": "webpack",
-    "start": "node ./dist/main.js",
+    "build": "rm -rf dist && tsc",
+    "start": "node ./dist/app.js",
     "dev": "nodemon ./src/app.ts --max-old-space-size=4096",
     "test": "mocha --require ts-node/register --extensions ts,tsx  src 'test/**/*.{ts,tsx}'"
   },
@@ -30,8 +30,7 @@
     "axios": "^0.21.0",
     "cheerio": "^1.0.0-rc.3",
     "puppeteer": "^5.5.0",
-    "robots-parser": "^2.1.1",
-    "util": "^0.12.3"
+    "robots-parser": "^2.1.1"
   },
   "devDependencies": {
     "@types/chai": "^4.2.14",
@@ -54,9 +53,7 @@
     "prettier": "^2.2.1",
     "ts-loader": "^8.0.13",
     "ts-node": "^9.1.1",
-    "typescript": "^4.1.2",
-    "webpack": "^5.11.1",
-    "webpack-cli": "^4.3.1"
+    "typescript": "^4.1.2"
   },
   "license": "MIT"
 }

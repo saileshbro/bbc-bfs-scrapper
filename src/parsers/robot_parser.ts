@@ -4,8 +4,7 @@ const robotsParser = require("robots-parser")
 
 export class RobotsParser {
   private _url: string
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private _parser: any
+  private _parser: typeof robotsParser
   /**
    * The constructor for RobotsParser class
    * @param {Link} link - The url to which the robots.txt string belongs

@@ -52,6 +52,7 @@ export default class LinkCollection {
     if (index < this._links.length) {
       return this._links[index]
     }
+    return
   }
   /**
    * Enqueue a new link or links array

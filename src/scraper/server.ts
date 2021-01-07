@@ -199,7 +199,9 @@ export default class Server {
           try {
             const filter: LinkFilter = FilterFactory.createFilter(link)
             return filter.isLinkValid()
-          } catch (error) {}
+          } catch (error) {
+            return false
+          }
         })
         this._links.enqueue(specialLinks)
         this._links.removeDuplicates()
