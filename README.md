@@ -2,17 +2,7 @@
 
 Steps to run
 
-- Create `db.json` file in the project root
-- Add this inside `db.json`
-
-```json
-{
-  "purifierErrorLinks": [],
-  "noCategory": [],
-  "articles": []
-}
-```
-
+- Rename `db.json.sample` file in the project root to `db.json`
 - Run These commands
 
 ```bash
