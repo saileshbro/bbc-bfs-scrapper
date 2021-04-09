@@ -28,7 +28,7 @@
   "homepage": "https://github.com/saileshbro/bbc-bfs-scrapper#readme",
   "dependencies": {
     "axios": "^0.21.0",
-    "cheerio": "^1.0.0-rc.3",
+    "cheerio": "^1.0.0-rc.6",
     "puppeteer": "^8.0.0",
     "robots-parser": "^2.3.0"
   },
