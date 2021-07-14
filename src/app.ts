@@ -1,8 +1,6 @@
-import yargs from "yargs"
 import HeadlessBrowser from "./headless_browser"
 import Link from "./link_collection/link"
 import Server from "./scraper/server"
-const { path } = yargs(process.argv).argv
 const server = new Server()
 const init = async () => {
   await HeadlessBrowser.instance.initialize()
@@ -13,15 +11,8 @@ const init = async () => {
   }
 }
 const seeds: Link[] = []
-if (path) {
-  const link = new Link("https://www.bbc.com", `/${path}`)
-  console.log("⌛⌛⌛⌛⌛⌛", link.resolve())
+const link = new Link("https://www.bbc.com")
+console.log("⌛⌛⌛⌛⌛⌛", link.resolve())
 
-  seeds.push(link)
-} else {
-  const link = new Link("https://www.bbc.com")
-  console.log("⌛⌛⌛⌛⌛⌛", link.resolve())
-
-  seeds.push(link)
-}
+seeds.push(link)
 init()

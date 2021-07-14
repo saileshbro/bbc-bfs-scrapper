@@ -1,4 +1,4 @@
-import { launch, Browser, Request, Page } from "puppeteer"
+import { launch, Browser, Page, HTTPRequest } from "puppeteer"
 
 export default class HeadlessBrowser {
   private _browser?: Browser
@@ -14,7 +14,7 @@ export default class HeadlessBrowser {
       const page = await this._browser.newPage()
       page.setDefaultNavigationTimeout(0)
       await page.setRequestInterception(true)
-      page.on("request", (request: Request) => {
+      page.on("request", (request: HTTPRequest) => {
         if (
           ["image", "stylesheet", "font", "other"].includes(
             request.resourceType()
