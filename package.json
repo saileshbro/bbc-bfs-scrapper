@@ -29,7 +29,7 @@
   "dependencies": {
     "axios": "^0.27.2",
     "cheerio": "^1.0.0-rc.12",
-    "puppeteer": "^15.4.0",
+    "puppeteer": "^15.5.0",
     "robots-parser": "^3.0.0"
   },
   "devDependencies": {
