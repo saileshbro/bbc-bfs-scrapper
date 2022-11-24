@@ -33,7 +33,7 @@
     "robots-parser": "^3.0.0"
   },
   "devDependencies": {
-    "@types/chai": "^4.3.3",
+    "@types/chai": "^4.3.4",
     "@types/chai-as-promised": "^7.1.5",
     "@types/cheerio": "^0.22.31",
     "@types/mocha": "^10.0.0",
@@ -41,7 +41,7 @@
     "@types/puppeteer": "^5.4.6",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.32.0",
-    "chai": "^4.3.6",
+    "chai": "^4.3.7",
     "chai-as-promised": "^7.1.1",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.5.0",
