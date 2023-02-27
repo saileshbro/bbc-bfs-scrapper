@@ -30,7 +30,7 @@
     "axios": "^1.3.3",
     "cheerio": "^1.0.0-rc.12",
     "puppeteer": "^19.7.2",
-    "robots-parser": "^3.0.0"
+    "robots-parser": "^3.0.1"
   },
   "devDependencies": {
     "@types/chai": "^4.3.4",
