@@ -48,7 +48,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "json-server": "^0.17.1",
     "mocha": "^10.2.0",
-    "nodemon": "^2.0.20",
+    "nodemon": "^2.0.21",
     "prettier": "^2.8.4",
     "ts-loader": "^9.4.2",
     "ts-node": "^10.9.1",
