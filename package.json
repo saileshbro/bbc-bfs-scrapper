@@ -35,7 +35,7 @@
   "devDependencies": {
     "@types/chai": "^4.3.5",
     "@types/chai-as-promised": "^7.1.5",
-    "@types/cheerio": "^0.22.31",
+    "@types/cheerio": "^0.22.32",
     "@types/mocha": "^10.0.1",
     "@types/node": "^20.5.0",
     "@types/puppeteer": "^7.0.4",
