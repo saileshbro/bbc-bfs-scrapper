@@ -36,7 +36,7 @@
     "@types/chai": "^4.3.6",
     "@types/chai-as-promised": "^7.1.6",
     "@types/cheerio": "^0.22.31",
-    "@types/mocha": "^10.0.1",
+    "@types/mocha": "^10.0.2",
     "@types/node": "^20.7.0",
     "@types/puppeteer": "^7.0.4",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
