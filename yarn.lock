@@ -246,10 +246,10 @@
   resolved "https://registry.yarnpkg.com/@tsconfig/node16/-/node16-1.0.2.tgz#423c77877d0569db20e1fc80885ac4118314010e"
   integrity sha512-eZxlbI8GZscaGS7kkc/trHTT5xgrjH3/1n2JDwusC9iahPKWMRvRjJSAN5mCXviuTGQ/lHnhvv8Q1YTpnfz9gA==
 
-"@types/chai-as-promised@^7.1.8":
-  version "7.1.8"
-  resolved "https://registry.yarnpkg.com/@types/chai-as-promised/-/chai-as-promised-7.1.8.tgz#f2b3d82d53c59626b5d6bbc087667ccb4b677fe9"
-  integrity sha512-ThlRVIJhr69FLlh6IctTXFkmhtP3NpMZ2QGq69StYLyKZFp/HOp1VdKZj7RvfNWYYcJ1xlbLGLLWj1UvP5u/Gw==
+"@types/chai-as-promised@^8.0.2":
+  version "8.0.2"
+  resolved "https://registry.yarnpkg.com/@types/chai-as-promised/-/chai-as-promised-8.0.2.tgz#5ac957d346fec5b686b62606baa5704787669704"
+  integrity sha512-meQ1wDr1K5KRCSvG2lX7n7/5wf70BeptTKst0axGvnN6zqaVpRqegoIbugiAPSqOW9K9aL8gDVrm7a2LXOtn2Q==
   dependencies:
     "@types/chai" "*"
 
@@ -798,10 +798,10 @@ camelcase@^6.0.0:
   resolved "https://registry.yarnpkg.com/camelcase/-/camelcase-6.2.0.tgz#924af881c9d525ac9d87f40d964e5cea982a1809"
   integrity sha512-c7wVvbw3f37nuobQNtgsgG9POC9qMbNuMQmTCqZv23b6MIz0fcYpBiOlv9gEN/hdLdnZTDQhg6e9Dq5M1vKvfg==
 
-chai-as-promised@^8.0.0:
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/chai-as-promised/-/chai-as-promised-8.0.0.tgz#7eda823f2a6fe9fd3a76bc76878886e955232e6f"
-  integrity sha512-sMsGXTrS3FunP/wbqh/KxM8Kj/aLPXQGkNtvE5wPfSToq8wkkvBpTZo1LIiEVmC4BwkKpag+l5h/20lBMk6nUg==
+chai-as-promised@^8.0.1:
+  version "8.0.1"
+  resolved "https://registry.yarnpkg.com/chai-as-promised/-/chai-as-promised-8.0.1.tgz#8913b2fd685b3f5637d25f627518e3ac9614d8e1"
+  integrity sha512-OIEJtOL8xxJSH8JJWbIoRjybbzR52iFuDHuF8eb+nTPD6tgXLjRqsgnUGqQfFODxYvq5QdirT0pN9dZ0+Gz6rA==
   dependencies:
     check-error "^2.0.0"
 
