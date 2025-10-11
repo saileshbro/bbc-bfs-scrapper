@@ -221,6 +221,19 @@
     tar-fs "^3.1.0"
     yargs "^17.7.2"
 
+"@puppeteer/browsers@2.10.11":
+  version "2.10.11"
+  resolved "https://registry.yarnpkg.com/@puppeteer/browsers/-/browsers-2.10.11.tgz#e819022871ed63ca8c21a97e3d06963e99ed44a3"
+  integrity sha512-kp3ORGce+oC3qUMJ+g5NH9W4Q7mMG7gV2I+alv0bCbfkZ36B2V/xKCg9uYavSgjmsElhwBneahWjJP7A6fuKLw==
+  dependencies:
+    debug "^4.4.3"
+    extract-zip "^2.0.1"
+    progress "^2.0.3"
+    proxy-agent "^6.5.0"
+    semver "^7.7.2"
+    tar-fs "^3.1.1"
+    yargs "^17.7.2"
+
 "@tootallnate/quickjs-emscripten@^0.23.0":
   version "0.23.0"
   resolved "https://registry.yarnpkg.com/@tootallnate/quickjs-emscripten/-/quickjs-emscripten-0.23.0.tgz#db4ecfd499a9765ab24002c3b696d02e6d32a12c"
@@ -894,6 +907,14 @@ chromium-bidi@8.0.0:
     mitt "^3.0.1"
     zod "^3.24.1"
 
+chromium-bidi@9.1.0:
+  version "9.1.0"
+  resolved "https://registry.yarnpkg.com/chromium-bidi/-/chromium-bidi-9.1.0.tgz#356eaea018eecc7977644305ee9fd27874b2b676"
+  integrity sha512-rlUzQ4WzIAWdIbY/viPShhZU2n21CxDUgazXVbw4Hu1MwaeUSEksSeM6DqPgpRjCLXRk702AVRxJxoOz0dw4OA==
+  dependencies:
+    mitt "^3.0.1"
+    zod "^3.24.1"
+
 cliui@^8.0.1:
   version "8.0.1"
   resolved "https://registry.yarnpkg.com/cliui/-/cliui-8.0.1.tgz#0c04b075db02cbfe60dc8e6cf2f5486b1a3608aa"
@@ -1127,6 +1148,11 @@ devtools-protocol@0.0.1495869:
   version "0.0.1495869"
   resolved "https://registry.yarnpkg.com/devtools-protocol/-/devtools-protocol-0.0.1495869.tgz#f68daef77a48d5dcbcdd55dbfa3265a51989c91b"
   integrity sha512-i+bkd9UYFis40RcnkW7XrOprCujXRAHg62IVh/Ah3G8MmNXpCGt1m0dTFhSdx/AVs8XEMbdOGRwdkR1Bcta8AA==
+
+devtools-protocol@0.0.1508733:
+  version "0.0.1508733"
+  resolved "https://registry.yarnpkg.com/devtools-protocol/-/devtools-protocol-0.0.1508733.tgz#047deb3531470efda2c7bf43c10b3ae9e4b3d51b"
+  integrity sha512-QJ1R5gtck6nDcdM+nlsaJXcelPEI7ZxSMw1ujHpO1c4+9l+Nue5qlebi9xO1Z2MGr92bFOQTW7/rrheh5hHxDg==
 
 diff@^4.0.1:
   version "4.0.2"
@@ -3396,7 +3422,20 @@ puppeteer-core@24.21.0:
     webdriver-bidi-protocol "0.2.11"
     ws "^8.18.3"
 
-puppeteer@*, puppeteer@^24.21.0:
+puppeteer-core@24.24.0:
+  version "24.24.0"
+  resolved "https://registry.yarnpkg.com/puppeteer-core/-/puppeteer-core-24.24.0.tgz#3027c0d59c5246a00e860000e8232745a035e7d6"
+  integrity sha512-RR5AeQ6dIbSepDe9PTtfgK1fgD7TuA9qqyGxPbFCyGfvfkbR7MiqNYdE7AhbTaFIqG3hFBtWwbVKVZF8oEqj7Q==
+  dependencies:
+    "@puppeteer/browsers" "2.10.11"
+    chromium-bidi "9.1.0"
+    debug "^4.4.3"
+    devtools-protocol "0.0.1508733"
+    typed-query-selector "^2.12.0"
+    webdriver-bidi-protocol "0.3.6"
+    ws "^8.18.3"
+
+puppeteer@*:
   version "24.21.0"
   resolved "https://registry.yarnpkg.com/puppeteer/-/puppeteer-24.21.0.tgz#170e101b9957e81fe65d5b28613b5188d1c407d6"
   integrity sha512-JNY9JluUXepKzqKoPHsNVsrkpRRTare8geNP2L8YMkFHOKIvWSki/yUL9l2VJpani49epEHLpVg+zDcbTYibWA==
@@ -3406,6 +3445,18 @@ puppeteer@*, puppeteer@^24.21.0:
     cosmiconfig "^9.0.0"
     devtools-protocol "0.0.1495869"
     puppeteer-core "24.21.0"
+    typed-query-selector "^2.12.0"
+
+puppeteer@^24.22.0:
+  version "24.24.0"
+  resolved "https://registry.yarnpkg.com/puppeteer/-/puppeteer-24.24.0.tgz#f58ecdbf99a579b396e6f60636821696fdd1483d"
+  integrity sha512-jRn6T8rSrQZXIplXICpH2zYJ2XrIFY7Ug0+TxRTuwY8ZTL7+MKDvFH0aLG7Xx3ts4twzxIKZmiYo+qg7whNpZw==
+  dependencies:
+    "@puppeteer/browsers" "2.10.11"
+    chromium-bidi "9.1.0"
+    cosmiconfig "^9.0.0"
+    devtools-protocol "0.0.1508733"
+    puppeteer-core "24.24.0"
     typed-query-selector "^2.12.0"
 
 qs@6.13.0:
@@ -3952,6 +4003,17 @@ tar-fs@^3.1.0:
     bare-fs "^4.0.1"
     bare-path "^3.0.0"
 
+tar-fs@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/tar-fs/-/tar-fs-3.1.1.tgz#4f164e59fb60f103d472360731e8c6bb4a7fe9ef"
+  integrity sha512-LZA0oaPOc2fVo82Txf3gw+AkEd38szODlptMYejQUhndHMLQ9M059uXR+AfS7DNo0NpINvSqDsvyaCrBVkptWg==
+  dependencies:
+    pump "^3.0.0"
+    tar-stream "^3.1.5"
+  optionalDependencies:
+    bare-fs "^4.0.1"
+    bare-path "^3.0.0"
+
 tar-stream@^3.1.5:
   version "3.1.6"
   resolved "https://registry.yarnpkg.com/tar-stream/-/tar-stream-3.1.6.tgz#6520607b55a06f4a2e2e04db360ba7d338cc5bab"
@@ -4159,6 +4221,11 @@ webdriver-bidi-protocol@0.2.11:
   version "0.2.11"
   resolved "https://registry.yarnpkg.com/webdriver-bidi-protocol/-/webdriver-bidi-protocol-0.2.11.tgz#dba18d9b0a33aed33fab272dbd6e42411ac753cc"
   integrity sha512-Y9E1/oi4XMxcR8AT0ZC4OvYntl34SPgwjmELH+owjBr0korAX4jKgZULBWILGCVGdVCQ0dodTToIETozhG8zvA==
+
+webdriver-bidi-protocol@0.3.6:
+  version "0.3.6"
+  resolved "https://registry.yarnpkg.com/webdriver-bidi-protocol/-/webdriver-bidi-protocol-0.3.6.tgz#55ad4ff9697532e3e04fb0446bb6dd4c158b3ad5"
+  integrity sha512-mlGndEOA9yK9YAbvtxaPTqdi/kaCWYYfwrZvGzcmkr/3lWM+tQj53BxtpVd6qbC6+E5OnHXgCcAhre6AkXzxjA==
 
 whatwg-encoding@^3.1.1:
   version "3.1.1"
