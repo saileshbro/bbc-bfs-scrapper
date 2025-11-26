@@ -33,7 +33,7 @@
     "robots-parser": "^3.0.1"
   },
   "devDependencies": {
-    "@types/chai": "^5.2.2",
+    "@types/chai": "^5.2.3",
     "@types/chai-as-promised": "^8.0.2",
     "@types/cheerio": "^1.0.0",
     "@types/mocha": "^10.0.7",
